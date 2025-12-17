@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import JsonResponse, HttpResponse
 import csv
 from django.db.models import Q, Sum, Avg
@@ -13,6 +13,7 @@ from produtos.models import Produto
 from lojas.models import Venda, Loja, EstoqueLoja
 
 @login_required
+@permission_required('balanco.views', raise_exception=True)
 def lista_balancos(request):
     """Lista todos os balanços com filtros e paginação"""
     # SEMPRE buscar todas as lojas para o modal de criação

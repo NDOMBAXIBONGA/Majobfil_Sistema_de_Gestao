@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Não Encontrada - MAJOBFIL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --warning: #f59e0b;
+            --sidebar-width: 250px;
+            --sidebar-collapsed-width: 70px;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .error-container {
+            max-width: 900px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .error-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: none;
+        }
+        
+        .error-header {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .error-body {
+            padding: 40px 30px;
+        }
+        
+        .error-code {
+            font-size: 6rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .btn-error {
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .btn-error:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-error-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+        }
+        
+        .btn-error-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .error-search {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .error-search h4 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .error-details-title {
+            color: var(--warning);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .error-info {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .error-info ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .error-info li {
+            margin-bottom: 5px;
+            font-family: monospace;
+            background: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .error-header {
+                padding: 30px 20px;
+            }
+            
+            .error-body {
+                padding: 30px 20px;
+            }
+            
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-title {
+                font-size: 1.8rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+            }
+            
+            .btn-error {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .error-search,
+            .error-details {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            body {
+                padding: 15px;
+            }
+            
+            .error-code {
+                font-size: 3rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+            }
+            
+            .error-icon {
+                font-size: 3rem;
+            }
+        }
+        
+        /* Logo styling */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        /* Search bar */
+        .search-container {
+            position: relative;
+            margin-top: 15px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .search-button:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        /* Footer */
+        .error-footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .error-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .error-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="logo-container">
+            <a href="{% url 'dashboard' %}" class="logo">
+                <i class="fas fa-chart-line logo-icon"></i>
+                <span>MAJOBFIL</span>
+            </a>
+        </div>
+        
+        <div class="error-card">
+            <div class="error-header">
+                <div class="error-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h1 class="error-code">404</h1>
+                <h2 class="error-title">Página Não Encontrada</h2>
+            </div>
+            
+            <div class="error-body">
+                <p class="error-message">
+                    A página que você está tentando acessar não existe ou foi movida para outro endereço. 
+                    Verifique a URL digitada ou utilize a pesquisa abaixo para encontrar o que precisa.
+                </p>
+                
+                <div class="error-search">
+                    <h4>
+                        <i class="fas fa-search"></i>
+                        O que você está procurando?
+                    </h4>
+                    <div class="search-container">
+                        <input type="text" class="search-input" id="searchInput" 
+                               placeholder="Digite o que você procura..." 
+                               aria-label="Campo de pesquisa">
+                        <button class="search-button" onclick="performSearch()" aria-label="Pesquisar">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="error-details">
+                    <h3 class="error-details-title">
+                        <i class="fas fa-info-circle"></i>
+                        Detalhes do Erro
+                    </h3>
+                    <p class="error-info">
+                        <strong>URL solicitada:</strong> {{ request_path|default:request.path }}<br>
+                        <strong>Método:</strong> {{ request.method }}<br>
+                        <strong>Data/Hora:</strong> {% now "d/m/Y H:i:s" %}<br>
+                        <strong>Usuário:</strong> 
+                        {% if request.user.is_authenticated %}
+                            {{ user.nome|default:user.username }}
+                        {% else %}
+                            Não autenticado
+                        {% endif %}
+                    </p>
+                    
+                    <p class="error-info mt-3">
+                        <strong>URLs disponíveis no sistema:</strong>
+                        <ul>
+                            <li>/dashboard/ - Dashboard principal</li>
+                            <li>/login/ - Página de login</li>
+                            <li>/logout/ - Logout do sistema</li>
+                            <li>/perfil/ - Perfil do usuário</li>
+                            <li>/produtos/ - Gerenciar produtos</li>
+                            <li>/balanco/ - Controle de balanços</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <div class="error-actions">
+                    <a href="{% url 'dashboard' %}" class="btn btn-error btn-error-primary">
+                        <i class="fas fa-home"></i>
+                        Ir para o Dashboard
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-error btn-error-outline">
+                        <i class="fas fa-arrow-left"></i>
+                        Voltar à Página Anterior
+                    </a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'listar_produtos_estoque' %}" class="btn btn-error btn-error-outline">
+                            <i class="fas fa-box"></i>
+                            Gerenciar Estoque
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-error btn-error-outline">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Fazer Login
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="error-footer">
+            <p>
+                &copy; 2024 MAJOBFIL - Sistema de Gestão. 
+                <a href="mailto:suporte@majobfil.com">Reportar problema</a>
+            </p>
+            <p>
+                Erro 404: Recurso Não Encontrado | IP: {{ request.META.REMOTE_ADDR }}
+            </p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Pesquisa automática
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (!searchTerm) {
+                alert('Digite algo para pesquisar.');
+                return;
+            }
+            
+            // Mapeamento de termos de pesquisa para URLs
+            const searchMap = {
+                'dashboard': '{% url "dashboard" %}',
+                'login': '{% url "login" %}',
+                'logout': '{% url "logout" %}',
+                'produto': '{% url "listar_produtos_estoque" %}',
+                'estoque': '{% url "listar_produtos_estoque" %}',
+                'balanço': '{% url "lista_balancos" %}',
+                'perfil': '{% url "perfil" %}',
+                'venda': '{% url "dashboard" %}',
+                'relatório': '{% url "dashboard" %}',
+                'loja': '{% url "dashboard" %}',
+                'usuário': '/admin/auth/user/',
+                'admin': '/admin/'
+            };
+            
+            // Converter para minúsculas para busca case-insensitive
+            const term = searchTerm.toLowerCase();
+            
+            // Procurar no mapa
+            for (const [key, url] of Object.entries(searchMap)) {
+                if (term.includes(key)) {
+                    window.location.href = url;
+                    return;
+                }
+            }
+            
+            // Se não encontrou, mostrar sugestões
+            alert(`Não encontramos resultados para "${searchTerm}".\n\nTente pesquisar por:\n- Dashboard\n- Estoque\n- Produtos\n- Login\n- Perfil`);
+        }
+        
+        // Permitir busca com Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // Auto-focus no campo de pesquisa
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 500);
+            
+            // Registrar erro 404
+            console.error('Erro 404:', {
+                path: window.location.pathname,
+                referrer: document.referrer,
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+        // Sugestão de URL baseada no histórico
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const value = e.target.value.toLowerCase();
+            if (value.includes('admin') || value.includes('painel')) {
+                e.target.placeholder = 'Tente /admin/ para o painel administrativo';
+            } else if (value.includes('estoque') || value.includes('produto')) {
+                e.target.placeholder = 'Tente /produtos/ para gerenciar estoque';
+            }
+        });
+    </script>
+</body>
+</html>

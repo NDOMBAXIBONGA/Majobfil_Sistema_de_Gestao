@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = True
+DEBUG = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'majobfil.middleware.force_custom_errors.ForceCustomErrorsMiddleware',
 ]
 
 ROOT_URLCONF = 'majobfil.urls'
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'majobfil.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,6 +145,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Adicione estas configurações ao seu settings.py
 
 AUTH_USER_MODEL = 'conta.Conta'  # Substitua 'sua_app' pelo nome do seu app
-
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'

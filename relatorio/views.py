@@ -54,10 +54,10 @@ def lista_relatorios(request):
             diferenca = relatorio.calcular_diferenca()
             
             # Determinar status
-            if diferenca > 0:
+            if diferenca < 0:
                 completos += 1
                 status_relatorio = 'completo'
-            elif diferenca < 0:
+            elif diferenca > 0:
                 negativos += 1
                 status_relatorio = 'negativo'
             else:
