@@ -31,7 +31,7 @@
         }
         
         .error-container {
-            max-width: 900px;
+            max-width: 800px;
             width: 100%;
             animation: fadeIn 0.8s ease-out;
         }
@@ -121,26 +121,12 @@
             border: 2px solid var(--primary);
         }
         
-        .error-search {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .error-search h4 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
         .error-details {
             background: #f8f9fa;
             padding: 25px;
             border-radius: 15px;
             border-left: 4px solid var(--warning);
+            margin-bottom: 30px;
         }
         
         .error-details-title {
@@ -219,7 +205,6 @@
                 justify-content: center;
             }
             
-            .error-search,
             .error-details {
                 padding: 20px;
             }
@@ -267,44 +252,18 @@
             font-size: 2rem;
         }
         
-        /* Search bar */
-        .search-container {
-            position: relative;
-            margin-top: 15px;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 12px 50px 12px 20px;
-            border: 2px solid #e9ecef;
+        /* Security message */
+        .security-message {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
             border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s;
+            padding: 15px;
+            margin-bottom: 20px;
         }
         
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .search-button {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        
-        .search-button:hover {
-            background: rgba(102, 126, 234, 0.1);
+        .security-message i {
+            color: #f39c12;
+            margin-right: 10px;
         }
         
         /* Footer */
@@ -337,7 +296,7 @@
         <div class="error-card">
             <div class="error-header">
                 <div class="error-icon">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <h1 class="error-code">404</h1>
                 <h2 class="error-title">Página Não Encontrada</h2>
@@ -345,73 +304,77 @@
             
             <div class="error-body">
                 <p class="error-message">
-                    A página que você está tentando acessar não existe ou foi movida para outro endereço. 
-                    Verifique a URL digitada ou utilize a pesquisa abaixo para encontrar o que precisa.
+                    A página que você está tentando acessar não existe ou não está disponível.
+                    Verifique se a URL está correta ou contate o administrador do sistema.
                 </p>
                 
-                <div class="error-search">
-                    <h4>
-                        <i class="fas fa-search"></i>
-                        O que você está procurando?
-                    </h4>
-                    <div class="search-container">
-                        <input type="text" class="search-input" id="searchInput" 
-                               placeholder="Digite o que você procura..." 
-                               aria-label="Campo de pesquisa">
-                        <button class="search-button" onclick="performSearch()" aria-label="Pesquisar">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
+                <div class="security-message">
+                    <p>
+                        <i class="fas fa-shield-alt"></i>
+                        <strong>Atenção:</strong> O acesso a URLs não autorizadas é monitorado pelo sistema de segurança.
+                    </p>
                 </div>
                 
                 <div class="error-details">
                     <h3 class="error-details-title">
                         <i class="fas fa-info-circle"></i>
-                        Detalhes do Erro
+                        Informações do Erro
                     </h3>
                     <p class="error-info">
                         <strong>URL solicitada:</strong> {{ request_path|default:request.path }}<br>
-                        <strong>Método:</strong> {{ request.method }}<br>
                         <strong>Data/Hora:</strong> {% now "d/m/Y H:i:s" %}<br>
-                        <strong>Usuário:</strong> 
+                        <strong>Status do Usuário:</strong> 
                         {% if request.user.is_authenticated %}
-                            {{ user.nome|default:user.username }}
+                            Autenticado ({{ user.nome|default:user.username }})
                         {% else %}
                             Não autenticado
                         {% endif %}
                     </p>
                     
+                    {% if request.user.is_authenticated %}
                     <p class="error-info mt-3">
-                        <strong>URLs disponíveis no sistema:</strong>
+                        <strong>Suas Permissões:</strong>
                         <ul>
-                            <li>/dashboard/ - Dashboard principal</li>
-                            <li>/login/ - Página de login</li>
-                            <li>/logout/ - Logout do sistema</li>
-                            <li>/perfil/ - Perfil do usuário</li>
-                            <li>/produtos/ - Gerenciar produtos</li>
-                            <li>/balanco/ - Controle de balanços</li>
+                            <li>Dashboard: Acesso permitido</li>
+                            <li>Perfil: Acesso permitido</li>
+                            {% if user.is_superuser %}
+                            <li>Administração: Acesso total</li>
+                            {% elif user.is_staff %}
+                            <li>Funcionário: Acesso limitado</li>
+                            {% else %}
+                            <li>Usuário: Acesso básico</li>
+                            {% endif %}
                         </ul>
                     </p>
+                    {% endif %}
                 </div>
                 
                 <div class="error-actions">
-                    <a href="{% url 'dashboard' %}" class="btn btn-error btn-error-primary">
-                        <i class="fas fa-home"></i>
-                        Ir para o Dashboard
-                    </a>
-                    <a href="javascript:history.back()" class="btn btn-error btn-error-outline">
-                        <i class="fas fa-arrow-left"></i>
-                        Voltar à Página Anterior
-                    </a>
                     {% if request.user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="btn btn-error btn-error-primary">
+                            <i class="fas fa-home"></i>
+                            Voltar ao Dashboard
+                        </a>
+                        <a href="javascript:history.back()" class="btn btn-error btn-error-outline">
+                            <i class="fas fa-arrow-left"></i>
+                            Voltar à Página Anterior
+                        </a>
+                        
+                        {% if user.is_superuser or user.is_staff %}
                         <a href="{% url 'listar_produtos_estoque' %}" class="btn btn-error btn-error-outline">
                             <i class="fas fa-box"></i>
-                            Gerenciar Estoque
+                            Ver Estoque
                         </a>
+                        {% endif %}
+                        
                     {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-error btn-error-outline">
+                        <a href="{% url 'login' %}" class="btn btn-error btn-error-primary">
                             <i class="fas fa-sign-in-alt"></i>
                             Fazer Login
+                        </a>
+                        <a href="/" class="btn btn-error btn-error-outline">
+                            <i class="fas fa-home"></i>
+                            Página Inicial
                         </a>
                     {% endif %}
                 </div>
@@ -421,86 +384,96 @@
         <div class="error-footer">
             <p>
                 &copy; 2024 MAJOBFIL - Sistema de Gestão. 
-                <a href="mailto:suporte@majobfil.com">Reportar problema</a>
+                <span id="error-id">Erro ID: {% now "U" %}</span>
             </p>
             <p>
-                Erro 404: Recurso Não Encontrado | IP: {{ request.META.REMOTE_ADDR }}
+                Este incidente foi registrado para fins de auditoria de segurança.
             </p>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Pesquisa automática
-        function performSearch() {
-            const searchTerm = document.getElementById('searchInput').value.trim();
-            if (!searchTerm) {
-                alert('Digite algo para pesquisar.');
-                return;
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Registrar erro 404 no console (apenas para debug)
+            console.warn('Erro 404 registrado:', {
+                path: window.location.pathname,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            });
             
-            // Mapeamento de termos de pesquisa para URLs
-            const searchMap = {
-                'dashboard': '{% url "dashboard" %}',
-                'login': '{% url "login" %}',
-                'logout': '{% url "logout" %}',
-                'produto': '{% url "listar_produtos_estoque" %}',
-                'estoque': '{% url "listar_produtos_estoque" %}',
-                'balanço': '{% url "lista_balancos" %}',
-                'perfil': '{% url "perfil" %}',
-                'venda': '{% url "dashboard" %}',
-                'relatório': '{% url "dashboard" %}',
-                'loja': '{% url "dashboard" %}',
-                'usuário': '/admin/auth/user/',
-                'admin': '/admin/'
-            };
+            // Prevenir inspeção de código (proteção básica)
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
             
-            // Converter para minúsculas para busca case-insensitive
-            const term = searchTerm.toLowerCase();
-            
-            // Procurar no mapa
-            for (const [key, url] of Object.entries(searchMap)) {
-                if (term.includes(key)) {
-                    window.location.href = url;
-                    return;
+            // Prevenir F12, Ctrl+Shift+I, Ctrl+U
+            document.addEventListener('keydown', function(e) {
+                if (e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+                    (e.ctrlKey && e.keyCode === 85)) { // Ctrl+U
+                    e.preventDefault();
+                    alert('Esta ação está desabilitada por questões de segurança.');
+                    return false;
                 }
+            });
+            
+            // Adicionar ID de erro único
+            const errorId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            document.getElementById('error-id').textContent = `Erro ID: ${errorId}`;
+            
+            // Log do erro no localStorage (apenas para debug local)
+            try {
+                const errorLog = {
+                    id: errorId,
+                    path: window.location.pathname,
+                    time: new Date().toISOString(),
+                    type: '404'
+                };
+                
+                // Armazenar apenas os últimos 10 erros
+                let errorHistory = JSON.parse(localStorage.getItem('majobfil_error_history') || '[]');
+                errorHistory.unshift(errorLog);
+                if (errorHistory.length > 10) errorHistory = errorHistory.slice(0, 10);
+                localStorage.setItem('majobfil_error_history', JSON.stringify(errorHistory));
+            } catch (e) {
+                // Ignorar erros de localStorage
             }
             
-            // Se não encontrou, mostrar sugestões
-            alert(`Não encontramos resultados para "${searchTerm}".\n\nTente pesquisar por:\n- Dashboard\n- Estoque\n- Produtos\n- Login\n- Perfil`);
+            // Auto-redirecionamento após 30 segundos (opcional)
+            setTimeout(function() {
+                if (document.hasFocus()) {
+                    if (window.location.pathname !== window.location.pathname) {
+                        window.location.href = "{% url 'dashboard' %}";
+                    }
+                }
+            }, 30000);
+        });
+        
+        // Função para gerar mensagem de segurança
+        function getSecurityMessage() {
+            const messages = [
+                "Acesso a URLs não autorizadas é registrado para auditoria de segurança.",
+                "Tentativas de acesso a áreas restritas são monitoradas pelo sistema.",
+                "Para acessar áreas administrativas, faça login como administrador.",
+                "A segurança do sistema é prioridade. Ações suspeitas são registradas.",
+                "Use apenas os links fornecidos pela aplicação para navegação segura."
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
         }
         
-        // Permitir busca com Enter
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
+        // Atualizar mensagem de segurança periodicamente
+        setInterval(function() {
+            const securityMsg = document.querySelector('.security-message p');
+            if (securityMsg) {
+                const originalText = securityMsg.innerHTML;
+                const newMsg = getSecurityMessage();
+                if (!originalText.includes(newMsg)) {
+                    securityMsg.innerHTML = `<i class="fas fa-shield-alt"></i> <strong>Atenção:</strong> ${newMsg}`;
+                }
             }
-        });
-        
-        // Auto-focus no campo de pesquisa
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                document.getElementById('searchInput').focus();
-            }, 500);
-            
-            // Registrar erro 404
-            console.error('Erro 404:', {
-                path: window.location.pathname,
-                referrer: document.referrer,
-                userAgent: navigator.userAgent,
-                timestamp: new Date().toISOString()
-            });
-        });
-        
-        // Sugestão de URL baseada no histórico
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const value = e.target.value.toLowerCase();
-            if (value.includes('admin') || value.includes('painel')) {
-                e.target.placeholder = 'Tente /admin/ para o painel administrativo';
-            } else if (value.includes('estoque') || value.includes('produto')) {
-                e.target.placeholder = 'Tente /produtos/ para gerenciar estoque';
-            }
-        });
+        }, 10000);
     </script>
 </body>
 </html>
